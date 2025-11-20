@@ -9,11 +9,10 @@ on:
         type: string
         required: true
       
-
 jobs:
   app1:
-    if: ${{ fromJSON(inputs.manifest)['qa-python-helloworld'].deploy }}
-    uses: cbp-test-QA-automation/qa-python-helloworld/.cloudbees/workflows/deploy.yaml
+    if: ${{ fromJSON(inputs.manifest)['qa-python-hello-world']['cbpautomation/python-hello-world-docker'].deploy }}
+    uses: test-cdro-qa/qa-python-hello-world/.cloudbees/workflows/deploy.yaml
     with:
-      manifest: ${{ toJSON(fromJSON(inputs.manifest)['qa-python-helloworld']) }}
-      environment: PROD
+      artifact-id: ${{ fromJSON(inputs.manifest)['qa-python-hello-world']['cbpautomation/python-hello-world-docker'].id }}
+      environment: QA
