@@ -24,13 +24,13 @@ jobs:
     with:
       disallowLaunchByUser: false
       notifyAllEligibleUsers: false
-      approvers: ce19a514-7c3b-11f0-9922-42010a83ae54,Users (System),Admins (System)
+      approvers: ce19a514-7c3b-11f0-9922-42010a83ae54
   deploy_app:
     needs:
       - man-appr-for-status-check
-    environment: QA
     steps:
       - with:
           artifact-id: ${{ fromJSON(inputs.manifest)['qa-python-hello-world']['cbpautomation/python-hello-world-docker'].id }}
           environment: QA
         uses: test-cdro-qa/qa-python-hello-world/.cloudbees/workflows/deploy.yaml
+        name: deploy
