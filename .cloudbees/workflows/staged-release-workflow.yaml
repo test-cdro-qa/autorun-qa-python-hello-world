@@ -25,9 +25,9 @@ jobs:
   sleep-job:
     needs: print-deploy
     steps:
-      - run: sleep 30
+      - run: sleep 90
         uses: docker://golang:1.20.3-alpine3.17
-        name: sleep 30
+        name: sleep 90
         shell: sh
   print-end:
     needs:
