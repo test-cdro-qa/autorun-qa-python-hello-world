@@ -12,7 +12,7 @@ metadata:
     - name: QA
       jobs:
         - print-deploy-to-qa
-        - man-appr-for-status-check
+        - man-appr-for-status-chec
         - deploy_app
 jobs:
   print-deploy-to-qa:
@@ -21,7 +21,15 @@ jobs:
         uses: docker://golang:1.20.3-alpine3.17
         name: Print Deploy
         shell: sh
-  man-appr-for-status-check:
+  deploy_app:
+    needs: man-appr-for-status-chec
+    steps:
+      - with:
+          artifact-id: ${{ fromJSON(inputs.manifest)['qa-python-hello-world']['cbpautomation/python-hello-world-docker'].id }}
+          environment: QA
+        uses: test-cdro-qa/qa-python-hello-world/.cloudbees/workflows/deploy.yaml
+        name: deploy
+  man-appr-for-status-chec:
     needs: print-deploy-to-qa
     timeout-minutes: 4320
     delegates: cloudbees-io/manual-approval/custom-job.yml@v1
@@ -29,12 +37,3 @@ jobs:
       disallowLaunchByUser: false
       notifyAllEligibleUsers: false
       approvers: ce19a514-7c3b-11f0-9922-42010a83ae54
-  deploy_app:
-    needs:
-      - man-appr-for-status-check
-    steps:
-      - with:
-          artifact-id: ${{ fromJSON(inputs.manifest)['qa-python-hello-world']['cbpautomation/python-hello-world-docker'].id }}
-          environment: QA
-        uses: test-cdro-qa/qa-python-hello-world/.cloudbees/workflows/deploy.yaml
-        name: deploy
