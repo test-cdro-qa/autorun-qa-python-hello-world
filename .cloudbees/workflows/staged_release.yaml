@@ -24,7 +24,10 @@ jobs:
   deploy_app:
     needs: sleep-30
     steps:
-      - uses: test-cdro-qa/qa-python-hello-world/.cloudbees/workflows/deploy.yaml
+      - with:
+          artifact-id: ${{ fromJSON(inputs.manifest)['qa-python-hello-world']['cbpautomation/python-hello-world-docker'].id }}
+          environment: QA
+        uses: test-cdro-qa/qa-python-hello-world/.cloudbees/workflows/deploy.yaml
         name: deploy
   sleep-30:
     needs: print-deploy-to-qa
