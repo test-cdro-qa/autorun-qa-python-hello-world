@@ -12,11 +12,28 @@ metadata:
   stages/v1alpha1:
     - name: QA
       jobs:
-        - QA
+        - print-deploy
+        - sleep-job
+        - print-end
 jobs:
-  QA:
-    environment: QA
-    uses: ./.cloudbees/workflows/deployer.yaml
-    with:
-      manifest: ${{ inputs.manifest }}
-      environment: ${{ job.environment }}
+  print-deploy:
+    steps:
+      - run: echo "starting print"
+        uses: docker://golang:1.20.3-alpine3.17
+        name: print
+        shell: sh
+  sleep-job:
+    needs: print-deploy
+    steps:
+      - run: sleep 30
+        uses: docker://golang:1.20.3-alpine3.17
+        name: sleep 30
+        shell: sh
+  print-end:
+    needs:
+      - sleep-job
+    steps:
+      - run: echo "sleep 30 completed and exiting"
+        uses: docker://golang:1.20.3-alpine3.17
+        name: print end
+        shell: sh
