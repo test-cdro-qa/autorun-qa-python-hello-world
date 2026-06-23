@@ -1,0 +1,21 @@
+
+apiVersion: automation.cloudbees.io/v1alpha1
+kind: workflow
+name: environmentApprovalWorkflow
+on:
+  workflow_dispatch:
+    inputs:
+      manifest:
+        type: string
+        required: true
+  workflow_call:
+    inputs:
+      manifest:
+        type: string
+        required: true
+jobs:
+  env-approval-job:
+    environment: approval_QA
+    steps:
+    - name: Placeholder step
+      uses: cloudbees-io/checkout@v1
