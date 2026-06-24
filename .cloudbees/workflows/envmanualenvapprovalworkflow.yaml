@@ -19,7 +19,7 @@ jobs:
     timeout-minutes: 15
     with:
       instructions: Manual approval between environment approvals.
-      approvers: ${approverUserId}
+      approvers: ce19a514-7c3b-11f0-9922-42010a83ae54
   second-env-approval-job:
     needs: manual-approval-job
     environment: approval_QA
