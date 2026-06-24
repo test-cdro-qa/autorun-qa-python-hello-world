@@ -11,18 +11,20 @@ jobs:
   first-env-approval-job:
     environment: approval_QA
     steps:
-    - name: Placeholder step
-      uses: cloudbees-io/checkout@v1
+      - name: Placeholder step
+        uses: cloudbees-io/checkout@v1
   manual-approval-job:
     needs: first-env-approval-job
-    delegates: cloudbees-io/manual-approval/custom-job.yml@v1
-    timeout-minutes: 15
     with:
       instructions: Manual approval between environment approvals.
+      disallowLaunchByUser: false
       approvers: ce19a514-7c3b-11f0-9922-42010a83ae54
+      notifyAllEligibleUsers: false
+    timeout-minutes: 30
+    delegates: cloudbees-io/manual-approval/custom-job.yml@v1
   second-env-approval-job:
     needs: manual-approval-job
     environment: approval_QA
     steps:
-    - name: Placeholder step
-      uses: cloudbees-io/checkout@v1`
+      - name: Placeholder step
+        uses: cloudbees-io/checkout@v1`
