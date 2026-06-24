@@ -22,6 +22,6 @@ jobs:
     environment: approval_QA
     steps:
       - name: Placeholder step
-        uses: cloudbees-io/checkout@v1`
+        uses: cloudbees-io/checkout@v1
     needs:
       - first-env-approval-job
